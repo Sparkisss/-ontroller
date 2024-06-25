@@ -1,0 +1,31 @@
+header {
+    position: relative;
+}
+
+header .contain {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    border: 1px solid #000;
+}
+
+header .contain .icon{
+    height: 2em;
+    box-shadow: 0px 0px 3px #000;
+}
+
+header .contain .icon img{
+    height: 90%;    
+}
+
+header .contain .routhButton {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+header .contain .auth {
+    display: flex;
+    align-items: center;
+}
+

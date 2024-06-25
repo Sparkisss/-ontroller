@@ -1,0 +1,12 @@
+.mainPageWrapper {
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 50%;
+    font-size: 24px;
+}
+
+.mainPageWrapper ul li {
+    margin-bottom: 1em;
+}
