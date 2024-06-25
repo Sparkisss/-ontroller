@@ -1,13 +1,13 @@
 import './App.css'
 import Header from './components/UI/header/Header'
-import MainPage from './pages/MainPage'
+import AuthPage from './pages/AuthPage'
 
 function App() {
 
   return (    
     <>
       <Header/>
-      <MainPage/>
+      <AuthPage/>
     </>
   )
 }

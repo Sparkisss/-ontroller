@@ -1,11 +1,11 @@
 import React from 'react';
 
-const mainPage = () => {
+const InfoPage = () => {
     return (
         <div>
-            MainPage
+            InfoPage
         </div>
     );
 };
 
-export default mainPage;
+export default InfoPage;
