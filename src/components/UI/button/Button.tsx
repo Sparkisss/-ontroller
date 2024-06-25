@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 
-import styles from './Button.module.css';
+import classes from './Button.module.css';
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -19,7 +19,7 @@ const Button: FC<ButtonProps> = ({
   active = false,
   ...attrs
 }) => {
-  const buttonClasses = classNames('btn', styles.button, className, {
+  const buttonClasses = classNames(classes.btn, classes.button, className, {
     active,
   });
 

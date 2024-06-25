@@ -1,0 +1,14 @@
+.btn {
+    border: 1px solid #000;
+    height: 2em;
+    padding: 0.5em;
+    border-radius: 5px;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.btn:hover {
+    box-shadow: 1px 3px 3px #000;
+    transform: scale(1.05);
+}

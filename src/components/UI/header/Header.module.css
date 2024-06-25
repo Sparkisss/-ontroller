@@ -1,5 +1,7 @@
 header {
     position: relative;
+    padding: 0.6em;
+    background-color: rgba(219, 202, 202, 0.418);
 }
 
 header .contain {
