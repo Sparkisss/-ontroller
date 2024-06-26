@@ -1,7 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router';
 import Button from '../components/UI/button/Button';
 
 const MainPage = () => {
+    const params = useParams<{id: string}>()
+
     return (
         <main className='mainPageWrapper'>
             <div className='controlState'>
@@ -18,7 +21,7 @@ const MainPage = () => {
                 </div>
             </div>
             <div className='infoOfObject'>
-                <h2>Title of object</h2>
+                <h2>Object {params.id}</h2>
                 <ul>
                     <li>work 1</li>
                     <li>work 2</li>

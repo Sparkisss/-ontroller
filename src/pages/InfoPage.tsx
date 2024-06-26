@@ -1,11 +1,14 @@
 import React from 'react';
+import { useParams } from 'react-router';
 import Button from '../components/UI/button/Button';
 
 const InfoPage = () => {
+    const params = useParams<{id: string}>()
+
     return (
         <main className='mainInfoWrapper'>
             <div className='listOfEquipment'>
-                <h3>Equipment in place</h3>
+                <h3>Equipment in place in Object {params.id}</h3>
                 <ul>
                     <li>pump one</li>
                     <li>pump two</li>
