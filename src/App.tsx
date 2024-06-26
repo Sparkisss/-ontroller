@@ -10,8 +10,6 @@ function App() {
     <>
       <Header/>
       <AuthPage/>
-      {/* <MainPage/> */}
-      {/* <InfoPage/> */}      
     </>
   )
 }
