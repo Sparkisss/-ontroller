@@ -5,7 +5,7 @@ import arrowRight from '../source/icon/angle-square-right.svg'
 
 const AuthPage = () => {
     return (
-        <div className='mainPageWrapper'>
+        <main className='authPageWrapper'>
             <ul className='list'>
                 <li>Object number 1</li>
                 <li>Object number 2</li>
@@ -22,7 +22,7 @@ const AuthPage = () => {
                 <Button className='custom-class'><img src={arrowLeft} alt="left" /></Button>
                 <Button className='custom-class'><img src={arrowRight} alt="right" /></Button>                
             </div>
-        </div>
+        </main>
     );
 };
 
