@@ -9,9 +9,9 @@ function App() {
   return (    
     <>
       <Header/>
-      {/* <AuthPage/> */}
+      <AuthPage/>
       {/* <MainPage/> */}
-      {/* <InfoPage/> */}
+      {/* <InfoPage/> */}      
     </>
   )
 }

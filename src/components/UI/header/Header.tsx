@@ -2,9 +2,20 @@ import React from 'react';
 import icon from '../../../source/icon/amd.svg';
 import classes from './Header.module.css';
 import Button from '../button/Button';
+import Modal from '../../modal/Modal'
+import { useState } from 'react'
+
 
 const Header = () => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const toggleModal = () => {
+      setIsOpen(!isOpen)
+    }
+    
     return (
+        <>
+        {isOpen ? <Modal/> : null}
         <header>
             <div className={classes.contain}>
                 <div className={classes.icon}>
@@ -15,10 +26,11 @@ const Header = () => {
                     <Button>INFO</Button>
                 </div>
                 <div className={classes.auth}>
-                    <Button>LOG IN</Button>
+                    <Button onClick={toggleModal}>LOG IN</Button>
                 </div>
             </div>
         </header>
+        </>
     );
 };
 
