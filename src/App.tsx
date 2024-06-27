@@ -1,45 +1,47 @@
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import Header from './components/UI/header/Header'
-import MainPage from './pages/MainPage'
-import AuthPage from './pages/AuthPage'
-import InfoPage from './pages/InfoPage'
-import './App.css'
-import NotFound from './pages/NotFound'
+// src/App.tsx
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from './components/layout/Layout';
+import MainPage from './pages/MainPage';
+import AuthPage from './pages/AuthPage';
+import InfoPage from './pages/InfoPage';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <AuthPage/>,
-    errorElement: <NotFound/>,
-  },
-  {
-    path: '/main',
-    element: <MainPage/>,    
-  },
-  {
-    path: '/info',
-    element: <InfoPage/>,
-    children: [
-      {
-        path: '/info/:id',
-        element: <InfoPage/>
-      }
-    ]
-  },
-  {
-    path: '/main/:id',
-    element: <MainPage/>,    
-  },
+    {
+        path: '/',
+        element: <AuthPage />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: '/main',
+        element: <MainPage />,
+        children: [
+          {
+            path: '/main/:id',
+            element: <MainPage />,
+          },
+      ],
+    },
+    {
+        path: '/info',
+        element: <InfoPage />,
+        children: [
+            {
+                path: '/info/:id',
+                element: <InfoPage />,
+            },
+        ],
+    },
 ]);
 
 function App() {
-
-  return (    
-    <>
-      <Header/>
-      <RouterProvider router={router}/>
-    </>
-  )
+    return (
+        <Layout>
+            <RouterProvider router={router} />
+        </Layout>
+    );
 }
 
-export default App
+export default App;
+
