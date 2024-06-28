@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/UI/button/Button';
 import arrowLeft from '../source/icon/angle-square-left.svg';
@@ -10,11 +9,11 @@ const AuthPage = () => {
     return (
         <main className='authPageWrapper'>
             <ul className='list'>
-                {
-                    countOfObject.map((object) => (
-                    <Link key={object} to={`/main/${object}`}>
-                        <li>Object number {object}</li>
-                    </Link>
+                {                  
+                    countOfObject.map((object) => (                        
+                        <Link key={object} to={`main/${object}`}>
+                            <li>Object number {object}</li>
+                        </Link>
                     )
                 )}
             </ul>

@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   disabled?: boolean;
   active?: boolean;
+  path?: string;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -17,14 +18,13 @@ const Button: FC<ButtonProps> = ({
   className = '',
   disabled = false,
   active = false,
-  ...attrs
 }) => {
   const buttonClasses = classNames(classes.btn, classes.button, className, {
     active,
   });
 
   return (
-    <button {...attrs} className={buttonClasses} disabled={disabled} onClick={onClick}>
+    <button className={buttonClasses} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );
