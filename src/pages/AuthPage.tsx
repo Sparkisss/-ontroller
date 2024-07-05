@@ -2,18 +2,24 @@ import { Link } from 'react-router-dom';
 import Button from '../components/UI/button/Button';
 import arrowLeft from '../source/icon/angle-square-left.svg';
 import arrowRight from '../source/icon/angle-square-right.svg';
-import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../components/state/store';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useEffect } from 'react';
+import { getUsers } from '../store/slices/userSlice';
 
 const AuthPage = () => {
-    const countOfObject = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const dispatch = useAppDispatch()
+    const users = useAppSelector(state => state.user.data)
+
+    useEffect(() => {
+        dispatch(getUsers())
+    }, [])
 
     return (
         <main className='authPageWrapper'>
             <ul className='list'>
-                {countOfObject.map((object) => (
-                    <Link key={object} to={`main/${object}`}>
-                        <li>Object number {object}</li>
+                {users.map((user:any) => (
+                    <Link key={user.id} to={`main/${user.id}`}>
+                        <li>{user.id}.{user.address.city}-{user.address.street}-{user.address.suite}</li>
                     </Link>
                 ))}
             </ul>
