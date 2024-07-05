@@ -6,7 +6,6 @@ import InfoPage from './pages/InfoPage';
 import NotFound from './pages/NotFound';
 import Modal from './components/modal/Modal';
 
-
 function App() {
     return (
         <>
@@ -20,8 +19,6 @@ function App() {
                 </Route>                
             </Routes>
         </>
-
-
     );
 }
 
