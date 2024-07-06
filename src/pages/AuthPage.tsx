@@ -14,6 +14,7 @@ const AuthPage = () => {
 
     return (
         <main className='authPageWrapper'>
+            <h2>List of object:</h2>
             <ul className='list'>
                 {users.map((user:any) => (
                     <Link key={user.id} to={`main/${user.id}`}>

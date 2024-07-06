@@ -1,0 +1,106 @@
+section {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url('../../source/img/authbackground.webp') no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+section .formBox {
+    position: relative;
+    width: 400px;
+    height: 450px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+section .formBox .formValue form h2 {
+    font-size: 2em;
+    color: azure;
+    text-align: center;
+}
+
+section .formBox .formValue form .inputbox {
+    position: relative;
+    margin: 30px 0;
+    width: 310px;
+    border-bottom: 2px solid #fff;
+}
+
+section .formBox .formValue form .inputbox label {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+    color: transparent;    
+}
+
+section .formBox .formValue form .inputbox input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 35px 0 5px;
+    color: #fff;
+}
+
+section .formBox .formValue form .forget {
+    margin: -15px 0 15px;
+    font-size: .9em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+section .formBox .formValue form .forget label input {
+    margin-right: 3px;
+}
+section .formBox .formValue form .forget a {
+    color: #fff;
+    text-decoration: none;
+}
+section .formBox .formValue form .forget a:hover {
+    text-decoration: underline;
+}
+section .formBox .formValue form button {
+    width: 100%;
+    background-color: #fff;
+    color: black;
+    height: 40px;
+    border-radius: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+section .formBox .formValue form .register {
+    font-size: .9em;
+    color: #fff;
+    text-align: center;
+    margin: 25px 0 10px;
+}
+section .formBox .formValue form .register p a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+
+section .formBox .formValue form .register p a:hover {
+    text-decoration: underline;
+}
+
