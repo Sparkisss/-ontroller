@@ -8,15 +8,15 @@ const MainPage = () => {
         <main className='mainPageWrapper'>
             <div className='controlState'>
                 <div className='mode'>
-                    <h3>Operating mode</h3>
-                    <Button></Button>
-                    <Button></Button>
+                    <h3>Mode:</h3>
+                    <Button>Auto</Button>
+                    <Button>Man.</Button>
                 </div>
                 <div className='state'>
-                    <h3>State</h3>
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
+                    <h3>State:</h3>
+                    <div className='divContain'>
+                        <div></div>
+                    </div>
                 </div>
             </div>
             <div className='infoOfObject'>

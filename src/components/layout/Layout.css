@@ -31,7 +31,7 @@
 /* End of page: Authpage */
 /* Page: MainPage */
 .mainPageWrapper {
-    height: 85vh;
+    margin: 1em;
     display: grid;
     grid-template-columns: 30% 1fr;
     grid-template-rows: 25% 40% 1fr;
@@ -39,7 +39,7 @@
                         "mode info"
                         "tool tool"
                         "archive archive";
-    gap: 0.5em
+    gap: 1em
 }
 
 .mainPageWrapper .controlState {
@@ -54,10 +54,71 @@
 .mainPageWrapper .archive {
     grid-area: archive;
 }
+.mainPageWrapper .controlState,
+.mainPageWrapper .infoOfObject,
+.mainPageWrapper .manageTool,
+.mainPageWrapper .archive {
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.mainPageWrapper .controlState {
+    display: flex;
+    gap: .8em;
+    align-items: center;
+}
+.mainPageWrapper .controlState .mode,
+.mainPageWrapper .controlState .state {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4em;
+}
+.mainPageWrapper .controlState .state .divContain {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1em;
+}
+.mainPageWrapper .controlState .state .divContain div {    
+    overflow: hidden;
+    width: 2.2em;
+    height: 2.2em;
+    border-radius: 50%;
+    border: 1px solid black;    
+    background-color: green;
+}
+
+.mainPageWrapper .infoOfObject {
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.mainPageWrapper .manageTool {
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+.mainPageWrapper .archive {
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
 /* End of page: Main page */
 /* Page: InfoPage */
 .mainInfoWrapper {
-    height: 85vh;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 40% 1fr;
@@ -65,5 +126,31 @@
                         "list"
                         "slider"
                         "task";
-    gap: 0.5em
+    gap: 1em
+}
+
+.mainInfoWrapper .listOfEquipment {
+    grid-area: list;
+}
+
+.mainInfoWrapper .slider {
+    grid-area: slider;
+}
+
+.mainInfoWrapper .todoTask {
+    grid-area: task;
+}
+
+.mainInfoWrapper .listOfEquipment,
+.mainInfoWrapper .slider,
+.mainInfoWrapper .todoTask {
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;    
 }
