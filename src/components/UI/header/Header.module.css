@@ -1,8 +1,6 @@
 header {
-    color: black;
-    position: relative;
     padding: 0.6em;
-    background-color: rgba(255, 240, 240, 0.877);
+    color: white;
 }
 
 header .contain {
@@ -10,11 +8,12 @@ header .contain {
     justify-content: space-between;
     padding: 1em;
     border: 1px solid #000;
+    border-radius: 5px;
+    background-color: rgba(221, 226, 228, 0.712);
 }
 
 header .contain .icon{
     height: 2em;
-    box-shadow: 0px 0px 3px #000;
 }
 
 header .contain .icon img{

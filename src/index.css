@@ -67,3 +67,9 @@ body {
   background-repeat: no-repeat;
   color: white;
 }
+#root{
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 80% 1fr;
+}
+

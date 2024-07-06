@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/UI/button/Button';
-import arrowLeft from '../source/icon/angle-square-left.svg';
-import arrowRight from '../source/icon/angle-square-right.svg';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useEffect } from 'react';
 import { getUsers } from '../store/slices/userSlice';
@@ -25,10 +23,10 @@ const AuthPage = () => {
             </ul>
             <div className='arrowContain'>
                 <Button className='custom-class'>
-                    <img src={arrowLeft} alt="left"/>
+                    PREVIES
                 </Button>
                 <Button className='custom-class'>
-                    <img src={arrowRight} alt="right"/>
+                    NEXT
                 </Button>
             </div>
         </main>

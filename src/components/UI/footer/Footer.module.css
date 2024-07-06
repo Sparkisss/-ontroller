@@ -1,0 +1,28 @@
+footer {
+    padding: 0.6em;
+    color: rgb(0, 0, 0);
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    padding: 1em;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: rgba(221, 226, 228, 0.712);
+}
+
+.container .listContainer {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.container .listContainer li {
+    padding: 1em 1em 0 0;
+}
+
+.container .listContainer li:last-child {
+    padding: 1em 0em 0 0;
+}
