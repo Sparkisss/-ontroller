@@ -37,17 +37,8 @@ section .formBox .formValue form .inputbox {
     border-bottom: 2px solid #fff;
 }
 
-section .formBox .formValue form .inputbox label {
-    position: absolute;
-    top: 50%;
-    left: 75%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-input:focus ~ label,
-input:valid ~ label {
-    color: transparent;    
+section .formBox .formValue form .inputbox input::placeholder {
+    color: black;
 }
 
 section .formBox .formValue form .inputbox input {
@@ -87,7 +78,20 @@ section .formBox .formValue form button {
     outline: none;
     cursor: pointer;
     font-weight: 600;
+    transition: all .3s ease;
 }
+section .formBox .formValue form button:hover {
+    box-shadow: 1px 5px 5px 5px #000;
+    background-color: rgb(241, 239, 239);
+}
+section .formBox .formValue form button:disabled {
+    background-color: rgb(206, 198, 198);
+}
+section .formBox .formValue form button:disabled:hover {
+    box-shadow: none;
+    background-color: none;
+}
+
 section .formBox .formValue form .register {
     font-size: .9em;
     color: #fff;
