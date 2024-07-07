@@ -34,6 +34,7 @@ boolean sensorLevel4[] = {false, false, false};
 unsigned long lastActivationLevel4 = 0;
 
 int state = 1;
+int nState = 0;
 
 void setup() {
   pinMode(GUARD_SENSOR, INPUT_PULLUP);
@@ -50,6 +51,7 @@ void setup() {
   pinMode(INDICATE_SENSOR_LEVEL2, OUTPUT);
   pinMode(INDICATE_SENSOR_LEVEL3, OUTPUT);
   pinMode(INDICATE_SENSOR_LEVEL4, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -78,19 +80,27 @@ void guardSensor(boolean &flag, boolean &flagNow, boolean &flagIndicate, int sen
 }
 
 void calculate (boolean error, boolean l2, boolean l3, boolean l4) {
-  if (error) {
+    if (Serial.available() > 0) {
+    nState = Serial.parseInt();
+    while (Serial.available() > 0) {
+        Serial.read();
+    }
+  }
+  if (error || nState == 5) {
     state = 5;
-  } else if (!error && l2 && !l3 && !l4) {
+  } else if ((!error && l2 && !l3 && !l4) || nState == 2) {
     state = 2;
-  } else if (!error && l2 && l3 && !l4) {
+  } else if ((!error && l2 && l3 && !l4) || nState == 3) {
     state = 3;
-  } else if (!error && l2 && l3 && l4) {
+  } else if ((!error && l2 && l3 && l4) || nState == 4) {
     state = 4;
   } else state = 1;
   work (state);
 }
 
 void work(int state) {
+  if (state != nState) Serial.print(state); 
+  nState = state;
   switch (state) {
     case 1:
       digitalWrite(INDICATE_SENSOR_LEVEL1, HIGH);
@@ -98,7 +108,7 @@ void work(int state) {
       digitalWrite(PUMP_TWO, LOW);
       digitalWrite(WORK_OK, HIGH);
       digitalWrite(WORK_WARNING, LOW);
-      digitalWrite(WORK_ERROR, LOW);
+      digitalWrite(WORK_ERROR, LOW);      
       break;
     case 2:
       digitalWrite(INDICATE_SENSOR_LEVEL1, HIGH);
@@ -121,8 +131,8 @@ void work(int state) {
       digitalWrite(PUMP_ONE, HIGH);
       digitalWrite(PUMP_TWO, HIGH);
       digitalWrite(WORK_OK, LOW);
-      digitalWrite(WORK_WARNING, HIGH);
-      digitalWrite(WORK_ERROR, LOW);
+      digitalWrite(WORK_WARNING, LOW);
+      digitalWrite(WORK_ERROR, HIGH);
       break;
     case 5:
       digitalWrite(PUMP_ONE, LOW);
