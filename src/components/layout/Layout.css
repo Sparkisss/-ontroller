@@ -119,6 +119,7 @@
 /* End of page: Main page */
 /* Page: InfoPage */
 .mainInfoWrapper {
+    margin: 1em;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 40% 1fr;
