@@ -35,6 +35,7 @@ unsigned long lastActivationLevel4 = 0;
 
 int state = 1;
 int nState = 0;
+int getState = 0;
 
 void setup() {
   pinMode(GUARD_SENSOR, INPUT_PULLUP);
@@ -81,25 +82,28 @@ void guardSensor(boolean &flag, boolean &flagNow, boolean &flagIndicate, int sen
 
 void calculate (boolean error, boolean l2, boolean l3, boolean l4) {
     if (Serial.available() > 0) {
-    nState = Serial.parseInt();
+    getState = Serial.parseInt();
     while (Serial.available() > 0) {
         Serial.read();
     }
   }
-  if (error || nState == 5) {
+  if (error || getState == 5) {
     state = 5;
-  } else if ((!error && l2 && !l3 && !l4) || nState == 2) {
+  } else if ((!error && l2 && !l3 && !l4) || getState == 2) {
     state = 2;
-  } else if ((!error && l2 && l3 && !l4) || nState == 3) {
+  } else if ((!error && l2 && l3 && !l4) || getState == 3) {
     state = 3;
-  } else if ((!error && l2 && l3 && l4) || nState == 4) {
+  } else if ((!error && l2 && l3 && l4) || getState == 4) {
     state = 4;
   } else state = 1;
   work (state);
 }
 
 void work(int state) {
-  if (state != nState) Serial.print(state); 
+  if (state != nState) {
+    Serial.print(state);
+    Serial.print("\n");
+  } 
   nState = state;
   switch (state) {
     case 1:
