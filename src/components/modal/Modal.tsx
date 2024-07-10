@@ -1,10 +1,11 @@
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import classes from './Modal.module.css'; 
+import { FC } from 'react';
 
 const portal = document.getElementById('portal') as HTMLElement
 
-const Modal = () => {
+const Modal: FC = () => {
     const {register, handleSubmit, reset, formState: {errors, isValid}} = useForm({
         defaultValues: {
             email: "",

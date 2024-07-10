@@ -1,7 +1,8 @@
 import { useParams } from 'react-router';
 import Button from '../components/UI/button/Button';
+import { FC } from 'react';
 
-const InfoPage = () => {
+const InfoPage: FC = () => {
     const params = useParams<{id: string}>()
 
     return (

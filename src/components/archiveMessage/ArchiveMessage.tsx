@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { DataProps } from '../../pages/MainPage';
+import { DataProps } from '../../types/types';
 
 const ArchiveMessage: FC<DataProps> = ({ data, children }) => {
     const [messages, setMessages] = useState<{ message: string; timestamp: string }[]>([]);

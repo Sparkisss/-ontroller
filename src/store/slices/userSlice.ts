@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice, AsyncThunk } from "@reduxjs/toolkit";
 import { IUser } from "../../types/types";
-
-export interface User {
-    data: IUser[] | null,
-    loading: boolean,
-    error: string | null
-}
+import { User } from "../../types/types";
 
 const initialState: User = {
     data: [],

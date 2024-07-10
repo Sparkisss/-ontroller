@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/UI/button/Button';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { getUsers } from '../store/slices/userSlice';
 import { IUser } from '../types/types';
 
-const AuthPage = () => {
+const AuthPage: FC = () => {
     const dispatch = useAppDispatch()
     const users:IUser[] = useAppSelector(state => state.user.data)
 

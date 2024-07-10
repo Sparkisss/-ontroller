@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import Button from '../UI/button/Button';
-import { DataProps } from '../../pages/MainPage';
+import { DataProps } from '../../types/types';
 
 const ObjectState: FC<DataProps> = ({data, send} :DataProps) => {
     return (

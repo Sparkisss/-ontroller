@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { io } from "socket.io-client"
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useEffect } from 'react';
 import { getUsers } from '../store/slices/userSlice';
@@ -8,13 +8,7 @@ import ArchiveMessage from '../components/archiveMessage/ArchiveMessage';
 import ObjectState from '../components/objectState/ObjectState';
 import { IUser } from '../types/types';
 
-export interface DataProps {
-    data: string | number;
-    send?: any;
-    children?: React.ReactNode;
-}
-
-const MainPage = () => {
+const MainPage: FC = () => {
     const params = useParams<{id: string}>()
 
     const [serverData, setServerData] = useState <string | number>('');

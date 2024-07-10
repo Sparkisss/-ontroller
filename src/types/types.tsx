@@ -15,3 +15,15 @@ export interface IUser {
     address: IAddress;
     company: ICompany;
 }
+
+export interface User {
+    data: IUser[] | null,
+    loading: boolean,
+    error: string | null
+}
+
+export interface DataProps {
+    data: string | number;
+    send?: any;
+    children?: React.ReactNode;
+}
