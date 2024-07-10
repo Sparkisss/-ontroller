@@ -1,44 +1,68 @@
 import { useParams } from 'react-router';
-import Button from '../components/UI/button/Button';
 import { io } from "socket.io-client"
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useEffect } from 'react';
+import { getUsers } from '../store/slices/userSlice';
+import ArchiveMessage from '../components/archiveMessage/ArchiveMessage';
+import ObjectState from '../components/objectState/ObjectState';
+import { IUser } from '../types/types';
+
+export interface DataProps {
+    data: string | number;
+    send?: any;
+    children?: React.ReactNode;
+}
 
 const MainPage = () => {
     const params = useParams<{id: string}>()
 
-    const [serverData, setServerData] = useState('')
+    const [serverData, setServerData] = useState <string | number>('');
     const socket = io("http://localhost:8000")
 
     socket.on('data', (data) => {
         setServerData(data)
     });
     
-    const send = (command: any) => {
+    const send = (command: string | number) => {
         socket.emit('command', command)
         console.log(command)
     }
 
+    const dispatch = useAppDispatch()
+    const users = useAppSelector(state => state.user.data)
+    const [info, setInfo] = useState('...')
+    const [workFirst, setWorkFirst] = useState('...')
+    const [workSecond, setWorkSecond] = useState('...')
+    const [workTheard, setWorkTheard] = useState('...')
+
+    useEffect(() => {
+        dispatch(getUsers())
+        getTitle(users, params.id)        
+    }, [])
+
+    const getTitle = (users:IUser[], num: any): void => {
+        users.map((user) => {
+            if (user.id == num){
+                setInfo(`${user.address.city}-${user.address.street}-${user.address.suite}`)
+                setWorkFirst(`${user.company.name}`)
+                setWorkSecond(`${user.company.catchPhrase}`)
+                setWorkTheard(`${user.company.bs}`)
+            }
+        }        
+    )}     
+
     return (
         <main className='mainPageWrapper'>
-            <div className='controlState'>
-                <div className='mode'>
-                    <h3>Mode: {serverData}</h3>
-                    <Button onClick={() => send(1)}>Auto</Button>
-                    <Button onClick={() => send(5)}>Man.</Button>
-                </div>
-                <div className='state'>
-                    <h3>State:</h3>
-                    <div className='divContain'>
-                        <div></div>
-                    </div>
-                </div>
+            <div className='controlState'>      
+                <ObjectState data={serverData} send={send}/>
             </div>
             <div className='infoOfObject'>
-                <h2>Object {params.id}</h2>
+                <h2>{info}</h2>
                 <ul>
-                    <li>work 1</li>
-                    <li>work 2</li>
-                    <li>work 3</li>
+                    <li>{workFirst}</li>
+                    <li>{workSecond}</li>
+                    <li>{workTheard}</li>
                 </ul>
             </div>
             <div className='manageTool'>
@@ -51,10 +75,9 @@ const MainPage = () => {
                 </ul>
             </div>
             <div className='archive'>
-                <h3>Archive of events</h3>
-                <div>event 1</div>
-                <div>event 2</div>
-                <div>event 3</div>
+                <ArchiveMessage data={serverData}>
+                    Notification
+                </ArchiveMessage>
             </div>
         </main>
     );
