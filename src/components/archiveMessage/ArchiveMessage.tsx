@@ -3,8 +3,9 @@ import { DataProps } from '../../types/types';
 
 const ArchiveMessage: FC<DataProps> = ({ data, children }) => {
     const [messages, setMessages] = useState<{ message: string; timestamp: string }[]>([]);
-
-    const getMessage = (event: string | number) => {
+    const [num, setNum] = useState<number>(0) //сщстояние для отслеживания номера сообщения   
+    // список возможных сообщений о состоягии объекта
+    const getMessage = (event: string | number) => { 
         switch (event) {
             case '1':
                 return "Standby mode";
@@ -20,19 +21,27 @@ const ArchiveMessage: FC<DataProps> = ({ data, children }) => {
                 return "";
         }
     };
-
+    // отслеживаем изменения сщстояния объекта и выводим дату изменения, сообщение о характере изменения,
+    // порядковый номер изменения
     useEffect(() => {
-        const timestamp = new Date().toLocaleString(); 
-        const newMessage = getMessage(data);
-        setMessages((prevMessages) => [...prevMessages, { message: newMessage, timestamp }]);
+        const timestamp = new Date().toLocaleString(); //дата изменения
+        const newMessage = getMessage(data); //характер изменения
+        setMessages((prevMessages) => { // формируем массив данных со всеми харрактеристиками
+            const updateMessage = [...prevMessages, { message: newMessage, timestamp }]
+            if (updateMessage.length > 4) { 
+                setNum(num + 1)
+                updateMessage.shift();
+            }
+            return updateMessage //возвращаем сформированный массив
+        });
     }, [data]);
 
     return (
         <>
             <h3>Archive of events: {children}</h3>
-            {messages.map((msg, index) => (
+            {messages.map((msg, index) => (                           
                 <div key={index}>
-                    {msg.message} - {msg.timestamp}
+                     {msg.message ? `${index + num}: ${msg.message} --- ${msg.timestamp}` : null}
                 </div>
             ))}
         </>

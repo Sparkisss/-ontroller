@@ -20,7 +20,6 @@ const MainPage: FC = () => {
     
     const send = (command: string | number) => {
         socket.emit('command', command)
-        console.log(command)
     }
 
     const dispatch = useAppDispatch()
