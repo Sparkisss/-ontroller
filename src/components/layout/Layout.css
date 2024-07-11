@@ -155,3 +155,11 @@
     align-items: center;
     gap: 1em;    
 }
+/* End of page: InfoPage */
+/* Page: NotFound */
+.errorPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*End of page: NotFound */
