@@ -7,6 +7,7 @@ import { getUsers } from '../store/slices/userSlice';
 import ArchiveMessage from '../components/archiveMessage/ArchiveMessage';
 import ObjectState from '../components/objectState/ObjectState';
 import { IUser } from '../types/types';
+import ManageTool from '../components/manageTool/ManageTool';
 
 const MainPage: FC = () => {
     const params = useParams<{id: string}>()
@@ -59,18 +60,10 @@ const MainPage: FC = () => {
                 </ul>
             </div>
             <div className='manageTool'>
-                <h3>Control</h3>
-                <ul>
-                    <li>pump 1</li>
-                    <li>pump 2 </li>
-                    <li>sensor 1</li>
-                    <li>sensor 2</li>
-                </ul>
+                <ManageTool data={serverData}/>
             </div>
             <div className='archive'>
-                <ArchiveMessage data={serverData}>
-                    Notification
-                </ArchiveMessage>
+                <ArchiveMessage data={serverData}></ArchiveMessage>
             </div>
         </main>
     );

@@ -1,3 +1,4 @@
+// типы для получаемых с сервера данных об объектах
 export interface IAddress {
     city: string;
     street: string;
@@ -21,7 +22,7 @@ export interface User {
     loading: boolean,
     error: string | null
 }
-
+// типы пропсов для MainPage
 export interface DataProps {
     data: string | number;
     send?: any;
