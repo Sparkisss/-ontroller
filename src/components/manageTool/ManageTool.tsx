@@ -1,24 +1,26 @@
-import {FC, ReactNode} from 'react';
+import {FC, useEffect, useState} from 'react';
 import classes from "./ManageTool.module.css"
 import { DataProps } from '../../types/types';
 
 const ManageTool: FC<DataProps> = ({data}) => {
-    let nData: number = 0; 
-    if (data !== '') nData = +data - 1
-    else nData = 1
-   
+    //обработка состояния прибора
+    let [nData, setNData] = useState<number>(0)
 
+    useEffect(() => {
+        if (data !== '') setNData(nData + +data - 1)
+            else setNData(nData = 5)
+    }, [nData])
+    // Интерфейсы
     interface IControl {
         info: IStatus[];
-    }
-    
+    }    
     interface IStatus {
         pump1: string;
         pump2: string;
         sensor1: string;
         sensor2: string;
     }
-    
+    //Данные о состоянии прибора
     const controlStateInfo: IControl = {
         info: [
             {
@@ -51,11 +53,14 @@ const ManageTool: FC<DataProps> = ({data}) => {
                 sensor1: '---',
                 sensor2: 'on'
             },
+            {
+                pump1: '...error',
+                pump2: '...error',
+                sensor1: '...error',
+                sensor2: '...error'
+            },
         ]
     };
-
-    console.log(typeof data)
-    console.log(data)
 
     return (
         <>

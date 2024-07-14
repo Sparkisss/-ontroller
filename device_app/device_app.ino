@@ -1,41 +1,33 @@
+#include "GParser.h"
+
 #define WORK_OK 8
 #define WORK_WARNING 9
 #define WORK_ERROR 10
 #define PUMP_ONE 12
 #define PUMP_TWO 11
-
 #define GUARD_SENSOR A0
 #define INDICATE_GUARD_SENSOR 3
-
 #define INDICATE_SENSOR_LEVEL1 4
-
 #define SENSOR_LEVEL2 A1
 #define INDICATE_SENSOR_LEVEL2 5
-
 #define SENSOR_LEVEL3 A2
 #define INDICATE_SENSOR_LEVEL3 6
-
 #define SENSOR_LEVEL4 A3
 #define INDICATE_SENSOR_LEVEL4 7
-
-#define interval 1000
+#define interval 4000
+#define period 100
+// таймер периода опроса прибора
 unsigned long timer;
-
-boolean gSensor[] = {false, false, false};
-unsigned long lastActivation = 0;
-
-boolean sensorLevel2[] = {false, false, false};
-unsigned long lastActivationLevel2 = 0;
-
-boolean sensorLevel3[] = {false, false, false};
-unsigned long lastActivationLevel3 = 0;
-
-boolean sensorLevel4[] = {false, false, false};
-unsigned long lastActivationLevel4 = 0;
-
-int state = 1;
-int nState = 0;
-int getState = 0;
+unsigned long last_press;
+// была ли кнопка нажата
+boolean btnSensor[] = {false, false, false, false};
+// состояние кнопки сейчас
+boolean btnSensorNow[] = {false, false, false, false};
+//состояние датчиков
+boolean indicate[] = {true, false, false, false, false};
+int mode = 0;
+int pumpOne = 0;
+int pumpTwo = 0;
 
 void setup() {
   pinMode(GUARD_SENSOR, INPUT_PULLUP);
@@ -53,101 +45,110 @@ void setup() {
   pinMode(INDICATE_SENSOR_LEVEL3, OUTPUT);
   pinMode(INDICATE_SENSOR_LEVEL4, OUTPUT);
   Serial.begin(9600);
+  Serial.setTimeout(1000);
 }
 
 void loop() {
+  if (millis() - last_press > period) {
+    last_press = millis();
+    buttons(btnSensor[0], btnSensorNow[0], SENSOR_LEVEL2, INDICATE_SENSOR_LEVEL2, indicate[1]);
+    buttons(btnSensor[1], btnSensorNow[1], SENSOR_LEVEL3, INDICATE_SENSOR_LEVEL3, indicate[2]);
+    buttons(btnSensor[2], btnSensorNow[2], SENSOR_LEVEL4, INDICATE_SENSOR_LEVEL4, indicate[3]);
+    buttons(btnSensor[3], btnSensorNow[3], GUARD_SENSOR, INDICATE_GUARD_SENSOR, indicate[4]); 
+  }
   if (millis() - timer > interval) {
+    work (indicate, mode, pumpOne, pumpTwo); 
+    serSerial();
     timer = millis();
-      guardSensor(gSensor[0], gSensor[1], gSensor[2], GUARD_SENSOR, INDICATE_GUARD_SENSOR, lastActivation);
-      guardSensor(sensorLevel2[0], sensorLevel2[1], sensorLevel2[2], SENSOR_LEVEL2, INDICATE_SENSOR_LEVEL2, lastActivationLevel2);
-      guardSensor(sensorLevel3[0], sensorLevel3[1], sensorLevel3[2], SENSOR_LEVEL3, INDICATE_SENSOR_LEVEL3, lastActivationLevel3);
-      guardSensor(sensorLevel4[0], sensorLevel4[1], sensorLevel4[2], SENSOR_LEVEL4, INDICATE_SENSOR_LEVEL4, lastActivationLevel4);
-      calculate (gSensor[2], sensorLevel2[2], sensorLevel3[2], sensorLevel4[2]);    
-  };
+  }
+  parsing();    
 }
+// функция обработки нажатия кнопки
+void buttons (boolean &btn, boolean &btnNow, int btnPin, int ledPin, boolean &indicate) {
+  btn = !digitalRead(btnPin);  
 
-void guardSensor(boolean &flag, boolean &flagNow, boolean &flagIndicate, int sensorPin, int indicatePin, unsigned long &delay) {
-  flagNow = !digitalRead(sensorPin);
-
-  if (flagNow == 1 && flag == 0 && millis() - delay > 100) {
-    flag = 1;
-    flagIndicate = !flagIndicate;
-    digitalWrite(indicatePin, flagIndicate);
-    delay = millis();
-  } 
-  if (flagNow == 0 && flag == 1) {
-    flag = 0;
+  if(btn && !btnNow) {
+    btnNow = true;
+    indicate = !indicate;
+    digitalWrite(ledPin, indicate);
+  }
+  if (!btn && btnNow) {
+    btnNow = false;
   }
 }
-
-void calculate (boolean error, boolean l2, boolean l3, boolean l4) {
-    if (Serial.available() > 0) {
-    getState = Serial.parseInt();
-    while (Serial.available() > 0) {
-        Serial.read();
-    }
-  }
-  if (error || getState == 5) {
-    state = 5;
-  } else if ((!error && l2 && !l3 && !l4) || getState == 2) {
-    state = 2;
-  } else if ((!error && l2 && l3 && !l4) || getState == 3) {
-    state = 3;
-  } else if ((!error && l2 && l3 && l4) || getState == 4) {
-    state = 4;
-  } else state = 1;
-  work (state);
-}
-
-void work(int state) {
-  if (state != nState) {
-    Serial.print(state);
-    Serial.print("\n");
-  } 
-  nState = state;
-  switch (state) {
-    case 1:
+//отработка состояний устройства
+void work(boolean indicate[], int &mode, int pumpOne, int pumpTwo) {
+  if (mode == 0) {
+    if (indicate[0] && !indicate[1] && !indicate[2] && !indicate[3] && !indicate[4]) {
       digitalWrite(INDICATE_SENSOR_LEVEL1, HIGH);
-      digitalWrite(PUMP_ONE, LOW);
-      digitalWrite(PUMP_TWO, LOW);
-      digitalWrite(WORK_OK, HIGH);
-      digitalWrite(WORK_WARNING, LOW);
-      digitalWrite(WORK_ERROR, LOW);      
-      break;
-    case 2:
-      digitalWrite(INDICATE_SENSOR_LEVEL1, HIGH);
-      digitalWrite(PUMP_ONE, HIGH);
-      digitalWrite(PUMP_TWO, LOW);
       digitalWrite(WORK_OK, HIGH);
       digitalWrite(WORK_WARNING, LOW);
       digitalWrite(WORK_ERROR, LOW);
-      break;
-    case 3:
-      digitalWrite(INDICATE_SENSOR_LEVEL1, HIGH);
+      digitalWrite(PUMP_ONE, LOW);
+      digitalWrite(PUMP_TWO, LOW);      
+    }else if (indicate[0] && indicate[1] && !indicate[2] && !indicate[3] && !indicate[4]) {
+      digitalWrite(WORK_OK, HIGH);
+      digitalWrite(WORK_WARNING, LOW);
+      digitalWrite(WORK_ERROR, LOW);
+      digitalWrite(PUMP_ONE, HIGH);
+      digitalWrite(PUMP_TWO, LOW);
+    } else if (indicate[0] && indicate[1] && indicate[2] && !indicate[3] && !indicate[4]) {
+      digitalWrite(WORK_OK, HIGH);
+      digitalWrite(WORK_WARNING, LOW);      
+      digitalWrite(WORK_ERROR, LOW);
       digitalWrite(PUMP_ONE, HIGH);
       digitalWrite(PUMP_TWO, HIGH);
+    } else if (indicate[0] && indicate[1] && indicate[2] && indicate[3] && !indicate[4]) {
       digitalWrite(WORK_OK, LOW);
       digitalWrite(WORK_WARNING, HIGH);
       digitalWrite(WORK_ERROR, LOW);
-      break;
-    case 4:
-      digitalWrite(INDICATE_SENSOR_LEVEL1, HIGH);
       digitalWrite(PUMP_ONE, HIGH);
       digitalWrite(PUMP_TWO, HIGH);
+    } else if (indicate[4]) {
       digitalWrite(WORK_OK, LOW);
       digitalWrite(WORK_WARNING, LOW);
       digitalWrite(WORK_ERROR, HIGH);
-      break;
-    case 5:
       digitalWrite(PUMP_ONE, LOW);
       digitalWrite(PUMP_TWO, LOW);
-      digitalWrite(WORK_OK, LOW);
-      digitalWrite(WORK_WARNING, LOW);
-      digitalWrite(WORK_ERROR, HIGH);
-      break;  
+    }
+  }
+  if (mode == 1) {
+    digitalWrite(WORK_OK, HIGH);
+    digitalWrite(WORK_WARNING, HIGH);
+    digitalWrite(WORK_ERROR, HIGH);
+    digitalWrite(PUMP_ONE, pumpOne);
+    digitalWrite(PUMP_TWO, pumpTwo);
+  }   
+}
+// чтение данных из serialport
+void parsing() {
+  if (Serial.available()) {
+    char str[30];
+    int amount = Serial.readBytesUntil(';', str, 30);
+    str[amount] = NULL;
+    GParser data(str, ',');
+    int ints[1];
+    int am = data.parseInts(ints);   
+    switch (ints[0]) {
+      case 0: mode = ints[1]; break; //pump 1
+      case 1: pumpOne = ints[1]; break; //pump2
+      case 2: pumpTwo = ints[1]; break;     
+    }
   }
 }
-
+//отправка данных в сериал порт
+void serSerial() {
+  Serial.print(digitalRead(INDICATE_SENSOR_LEVEL1)); Serial.print(' ');
+  Serial.print(digitalRead(INDICATE_SENSOR_LEVEL2)); Serial.print(' ');
+  Serial.print(digitalRead(INDICATE_SENSOR_LEVEL3)); Serial.print(' ');
+  Serial.print(digitalRead(INDICATE_SENSOR_LEVEL4)); Serial.print(' ');
+  Serial.print(digitalRead(INDICATE_GUARD_SENSOR)); Serial.print(' ');
+  Serial.print(digitalRead(PUMP_ONE)); Serial.print(' ');
+  Serial.print(digitalRead(PUMP_TWO)); Serial.print(' ');
+  Serial.print(digitalRead(WORK_OK)); Serial.print(' ');
+  Serial.print(digitalRead(WORK_WARNING)); Serial.print(' ');
+  Serial.print(digitalRead(WORK_ERROR)); Serial.print(' ');
+}
 
 
 
