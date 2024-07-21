@@ -34,17 +34,18 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('Client has connected');
 
-   socket.on('command', (data) => {
-      // Send date to SerialPort
-      const command = `${data};`; 
-      port.write(command, (err) => {
-          if (err) {
-              console.error('Error sending data: ', err.message);
-          } else {
-              console.log('Data sent to SerialPort: ', command);
-          }
-      });
-  });
+  // Обработка события 'LED_CONTROL' от клиента
+  socket.on('LED_CONTROL', (data) => {
+    // Отправляем данные на SerialPort
+    const command = `${data.stand},${data.value};`; // Пример: "1,1;"
+    port.write(command, (err) => {
+        if (err) {
+            console.error('Ошибка при отправке данных: ', err.message);
+        } else {
+            console.log('Данные отправлены на SerialPort: ', command);
+        }
+    });
+});
 
   // Обработка отключения клиента
   socket.on('disconnect', () => {

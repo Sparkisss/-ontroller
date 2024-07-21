@@ -147,7 +147,7 @@ void serSerial() {
   Serial.print(digitalRead(PUMP_TWO)); Serial.print(' ');
   Serial.print(digitalRead(WORK_OK)); Serial.print(' ');
   Serial.print(digitalRead(WORK_WARNING)); Serial.print(' ');
-  Serial.print(digitalRead(WORK_ERROR)); Serial.print(' ');
+  Serial.print(digitalRead(WORK_ERROR)); Serial.print(" \n");
 }
 
 

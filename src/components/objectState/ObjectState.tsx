@@ -7,8 +7,8 @@ const ObjectState: FC<DataProps> = ({data, send} :DataProps) => {
         <>
             <div className='mode'>
                 <h3>Mode: {data}</h3>
-                <Button onClick={() => send(1)}>Auto</Button>
-                <Button onClick={() => send(5)}>Man.</Button>
+                <Button onClick={() => send(1, 1, 1)}>Auto</Button>
+                <Button onClick={() => send(0, 0, 0)}>Man.</Button>
             </div>
             <div className='state'>
                 <h3>State:</h3>

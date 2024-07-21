@@ -9,18 +9,41 @@ import ObjectState from '../components/objectState/ObjectState';
 import { IUser } from '../types/types';
 import ManageTool from '../components/manageTool/ManageTool';
 
-const MainPage: FC = () => {
-    const params = useParams<{id: string}>()
+type CoreCommand = {
+    stand: number
+    value: number | string
+}
 
+const MainPage: FC = () => {
+    const params = useParams<{id: string}>();
     const [serverData, setServerData] = useState <string | number>('');
+    
     const socket = io("http://localhost:8000")
 
-    socket.on('data', (data) => {
-        setServerData(data)
-    });
-    
-    const send = (command: string | number) => {
-        socket.emit('command', command)
+    // Здесь можно задать разные значения для управления прибором
+    const [coreCommands, setCoreCommands] = useState<CoreCommand[]>([
+        { stand: 0, value: 0 }, // режим
+        { stand: 1, value: 0 }, // насос 1
+        { stand: 2, value: 0 }, // насос 2
+    ]);
+
+    socket.on('data', (data: string) => {           
+        setServerData(data);                   
+    });      
+   
+    const send = (mode: number, pump1: number, pump2: number) => {
+        // Меняем значения coreCommands
+        const newCoreCommands: CoreCommand[] = [
+            { stand: 0, value: mode }, 
+            { stand: 1, value: pump1 }, 
+            { stand: 2, value: pump2 }, 
+        ];
+        setCoreCommands(newCoreCommands);
+
+        // Отправляем команды на сервер
+        newCoreCommands.forEach((command) => {
+            socket.emit('LED_CONTROL', command)            
+        });
     }
 
     const dispatch = useAppDispatch()
@@ -34,7 +57,7 @@ const MainPage: FC = () => {
         dispatch(getUsers())
         getTitle(users, params.id)        
     }, [])
-
+    
     const getTitle = (users:IUser[], num: any): void => {
         users.map((user) => {
             if (user.id == num){
