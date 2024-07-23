@@ -10,7 +10,7 @@ const ArchiveMessage: FC<DataProps> = ({ data, children }) => {
         for (let i = 0; i < event.length; i++) {            
             console.log(event[7]);
             if (event[7] === '1') return 'OK';
-            if (event[8] === '1') return 'Atention';
+            if (event[8] === '1') return 'Attention';
             if (event[9] === '1') return 'Error';            
         }
         return 'In progress...'       
