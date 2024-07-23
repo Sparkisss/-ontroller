@@ -10,33 +10,33 @@ import { IUser } from '../types/types';
 import ManageTool from '../components/manageTool/ManageTool';
 
 type CoreCommand = {
-    stand: number
-    value: number | string
+    stand: string
+    value: string
 }
 
 const MainPage: FC = () => {
     const params = useParams<{id: string}>();
-    const [serverData, setServerData] = useState <string | number>('');
+    const [serverData, setServerData] = useState <string>('');
     
     const socket = io("http://localhost:8000")
 
     // Здесь можно задать разные значения для управления прибором
     const [coreCommands, setCoreCommands] = useState<CoreCommand[]>([
-        { stand: 0, value: 0 }, // режим
-        { stand: 1, value: 0 }, // насос 1
-        { stand: 2, value: 0 }, // насос 2
+        { stand: '0', value: '0' }, // режим
+        { stand: '1', value: '0' }, // насос 1
+        { stand: '2', value: '0' }, // насос 2
     ]);
 
     socket.on('data', (data: string) => {           
         setServerData(data);                   
     });      
    
-    const send = (mode: number, pump1: number, pump2: number) => {
+    const send = (mode: string, pump1: string, pump2: string) => {
         // Меняем значения coreCommands
         const newCoreCommands: CoreCommand[] = [
-            { stand: 0, value: mode }, 
-            { stand: 1, value: pump1 }, 
-            { stand: 2, value: pump2 }, 
+            { stand: '0', value: mode }, 
+            { stand: '1', value: pump1 }, 
+            { stand: '2', value: pump2 }, 
         ];
         setCoreCommands(newCoreCommands);
 

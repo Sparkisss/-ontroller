@@ -24,7 +24,7 @@ export interface User {
 }
 // типы пропсов для MainPage
 export interface DataProps {
-    data: string | number;
+    data: string;
     send?: any;
     children?: React.ReactNode;
 }
