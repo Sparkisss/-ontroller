@@ -6,13 +6,9 @@ import { useEffect } from 'react';
 import { getUsers } from '../store/slices/userSlice';
 import ArchiveMessage from '../components/archiveMessage/ArchiveMessage';
 import ObjectState from '../components/objectState/ObjectState';
-import { IUser } from '../types/types';
+import { IUser, CoreCommand } from '../types/types';
 import ManageTool from '../components/manageTool/ManageTool';
-
-type CoreCommand = {
-    stand: string
-    value: string
-}
+import ObjectInfo from '../components/objectInfo/ObjectInfo';
 
 const MainPage: FC = () => {
     const params = useParams<{id: string}>();
@@ -29,8 +25,8 @@ const MainPage: FC = () => {
 
     socket.on('data', (data: string) => {           
         setServerData(data);                   
-    });      
-   
+    });  
+
     const send = (mode: string, pump1: string, pump2: string) => {
         // Меняем значения coreCommands
         const newCoreCommands: CoreCommand[] = [
@@ -39,11 +35,11 @@ const MainPage: FC = () => {
             { stand: '2', value: pump2 }, 
         ];
         setCoreCommands(newCoreCommands);
-
         // Отправляем команды на сервер
         newCoreCommands.forEach((command) => {
             socket.emit('LED_CONTROL', command)            
         });
+        
     }
 
     const dispatch = useAppDispatch()
@@ -72,15 +68,10 @@ const MainPage: FC = () => {
     return (
         <main className='mainPageWrapper'>
             <div className='controlState'>      
-                <ObjectState data={serverData} send={send}/>
+                <ObjectState data={serverData} send={send} coreCommands={coreCommands}/>
             </div>
             <div className='infoOfObject'>
-                <h2>{info}</h2>
-                <ul>
-                    <li>{workFirst}</li>
-                    <li>{workSecond}</li>
-                    <li>{workTheard}</li>
-                </ul>
+                <ObjectInfo info={info} workFirst={workFirst} workSecond={workSecond} workTheard={workTheard}/>
             </div>
             <div className='manageTool'>
                 <ManageTool data={serverData}/>

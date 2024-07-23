@@ -20,7 +20,7 @@ const Button: FC<ButtonProps> = ({
   active = false,
 }) => {
   const buttonClasses = classNames(classes.btn, classes.button, className, {
-    active,
+    [classes.active]: active,
   });
 
   return (

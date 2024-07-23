@@ -24,7 +24,17 @@ export interface User {
 }
 // типы пропсов для MainPage
 export interface DataProps {
-    data: string;
+    data?: string;
     send?: any;
     children?: React.ReactNode;
+    info?: string;
+    workFirst?: string;
+    workSecond?: string;
+    workTheard?: string;
+    coreCommands?: CoreCommand[]
+}
+// типы для отправляемых данных
+export type CoreCommand = {
+    stand: string
+    value: string
 }
