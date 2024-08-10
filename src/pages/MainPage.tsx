@@ -38,8 +38,7 @@ const MainPage: FC = () => {
         // Отправляем команды на сервер
         newCoreCommands.forEach((command) => {
             socket.emit('LED_CONTROL', command)            
-        });
-        
+        });        
     }
 
     const dispatch = useAppDispatch()
@@ -74,7 +73,7 @@ const MainPage: FC = () => {
                 <ObjectInfo info={info} workFirst={workFirst} workSecond={workSecond} workTheard={workTheard}/>
             </div>
             <div className='manageTool'>
-                <ManageTool data={serverData}/>
+                <ManageTool data={serverData} send={send} coreCommands={coreCommands}/>
             </div>
             <div className='archive'>
                 <ArchiveMessage data={serverData}></ArchiveMessage>

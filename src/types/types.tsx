@@ -35,6 +35,6 @@ export interface DataProps {
 }
 // типы для отправляемых данных
 export type CoreCommand = {
-    stand: string
-    value: string
+    stand: string | number
+    value: string | number
 }

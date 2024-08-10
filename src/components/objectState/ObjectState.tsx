@@ -4,13 +4,30 @@ import { DataProps } from '../../types/types';
 
 
 const ObjectState: FC<DataProps> = ({data, send} :DataProps) => {
+    let newData = data?.split(" ").map(String);    
 
     const [autoActive, autoSetIsActive] = useState<boolean>(true);
     const [manActive, manSetIsActive] = useState<boolean>(false);
-
-    let newData = data?.split(" ").map(String); 
+    const [statusOfObject, setStatusOfObject] = useState<string>('In progress ...')
 
     const divRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (newData) {
+            for (let i = 0; i < newData?.length; i++) {
+                if(newData[7] === '1') {
+                    changeStatusRender('ok')
+                    setStatusOfObject('OK')
+                } else if (newData[8] === '1') {
+                    changeStatusRender('attention')
+                    setStatusOfObject('Attention')
+                } else if (newData[9] === '1') {
+                    changeStatusRender('error')
+                    setStatusOfObject('Error')
+                }
+            }
+        }               
+    }, [data])
 
     const handleClickBtnAuto = () => {
         send(0, 0, 0)
@@ -25,21 +42,6 @@ const ObjectState: FC<DataProps> = ({data, send} :DataProps) => {
         manSetIsActive(true)
         autoSetIsActive(false)
     }
-
-    useEffect(() => {
-        if (newData) {
-            for (let i = 0; i < newData?.length; i++) {
-                if(newData[7] === '1') {
-                    changeStatusRender('ok') 
-                } else if (newData[8] === '1') {
-                    changeStatusRender('attention')
-                } else if (newData[9] === '1') {
-                    changeStatusRender('error')
-                }
-            }
-        }
-               
-    }, [data])
 
     const changeStatusRender = (status: string) => {
         if (status && divRef.current) {
@@ -65,7 +67,7 @@ const ObjectState: FC<DataProps> = ({data, send} :DataProps) => {
     return (
         <>
             <div className='mode'>
-                <h3>Mode: {data}</h3>
+                <h3>Mode: {statusOfObject}</h3>
                 <Button active={autoActive} onClick={handleClickBtnAuto}>Auto</Button>
                 <Button active={manActive} onClick={handleClickBtnManual}>Man.</Button>
             </div>
