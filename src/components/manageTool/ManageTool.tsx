@@ -9,7 +9,7 @@ const ManageTool: FC<DataProps> = ({data, coreCommands, send}) => {
 
     useEffect(() => {
         if (data) setNData(nData + +data - 1)
-            else setNData(nData = 5)
+            else setNData(5)
     }, [nData])
 
     const [isBtnDisabled, setIsBtnDisabled] = useState<boolean>(true)

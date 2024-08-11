@@ -9,12 +9,7 @@ const InfoPage: FC = () => {
         <main className='mainInfoWrapper'>
             <div className='listOfEquipment'>
                 <h3>Equipment in place in Object {params.id}</h3>
-                <ul>
-                    <li>pump one</li>
-                    <li>pump two</li>
-                    <li>sensor one</li>
-                    <li>sensor two</li>
-                </ul>
+                <Button>Add photo</Button>
             </div>
             <div className='slider'>
                 <div>Slider</div>
