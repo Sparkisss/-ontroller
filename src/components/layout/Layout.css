@@ -140,7 +140,7 @@
     margin: 1em;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 20% 1fr 1fr;
+    grid-template-rows: 15% 46% 1fr;
     grid-template-areas: 
                         "list"
                         "slider"
@@ -171,7 +171,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1em;    
+    gap: 1em;
+    max-height: 100%; 
 }
 /* End of page: InfoPage */
 /* Page: NotFound */

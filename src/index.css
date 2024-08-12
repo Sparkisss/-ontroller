@@ -68,8 +68,11 @@ body {
   color: white;
 }
 #root{
-  height: 100%;
+  min-height: 100vh;
   display: grid;
+  background-image: url('./source/img/authbackground.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
   grid-template-rows: 1fr 80% 1fr;
 }
 

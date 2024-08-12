@@ -1,0 +1,49 @@
+.icon {
+    display: flex;
+    width: 90%;    
+    gap: 2em;
+    flex-basis: auto;
+}
+.icon .prev,
+.icon .next{
+    width: 1.7em;
+    height: 1.7em;
+    transition: all .3s ease;
+    cursor: pointer;
+} 
+.icon .prev {
+    background: url('../../assets/slider/icon/arrow-alt-circle-left.svg') no-repeat center center;
+    background-size: contain;
+}
+
+.icon .next {
+    background: url('../../assets/slider/icon/arrow-alt-circle-right.svg') no-repeat center center;
+    background-size: contain;
+}
+.icon .next:hover,
+.icon .prev:hover {
+    filter: invert(50%) sepia(40%) saturate(1000%) hue-rotate(90deg);
+}
+.slides {
+    display: flex;
+    width: 92vw;
+    max-height: 80%;
+    gap: .5em;
+    flex-basis: 80%;    
+}
+.slides .slide {
+    overflow: hidden; 
+    outline: 1px solid red;
+    border-radius: 10px; 
+    flex: 1;
+    flex-grow: 1;
+}
+.slides .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+:global(.active) {
+    flex-grow: 3 !important;
+}

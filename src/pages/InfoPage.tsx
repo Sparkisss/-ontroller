@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import Button from '../components/UI/button/Button';
 import { FC } from 'react';
+import Slider from '../components/slider/Slider';
 
 const InfoPage: FC = () => {
     const params = useParams<{id: string}>()
@@ -12,7 +13,7 @@ const InfoPage: FC = () => {
                 <Button>Add photo</Button>
             </div>
             <div className='slider'>
-                <div>Slider</div>
+                <Slider/>
             </div>
             <div className='todoTask'>
                 <h3>List of tasks</h3>
