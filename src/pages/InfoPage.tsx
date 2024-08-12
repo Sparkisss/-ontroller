@@ -2,15 +2,15 @@ import { useParams } from 'react-router';
 import Button from '../components/UI/button/Button';
 import { FC } from 'react';
 import Slider from '../components/slider/Slider';
+import AddPage from '../components/addPage/AddPage';
 
 const InfoPage: FC = () => {
     const params = useParams<{id: string}>()
-
+    
     return (
         <main className='mainInfoWrapper'>
             <div className='listOfEquipment'>
-                <h3>Equipment in place in Object {params.id}</h3>
-                <Button>Add photo</Button>
+                <AddPage params={params.id}/>
             </div>
             <div className='slider'>
                 <Slider/>

@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const images = [photo_1, photo_2, photo_3, photo_4, photo_5];
 
-const Slider = () => {
+const Slider = () => {        
     const [activeId, setActiveId] = useState<number>(0) 
 
     const handleClickPrev = () => {
