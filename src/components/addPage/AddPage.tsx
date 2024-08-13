@@ -1,25 +1,20 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef} from 'react';
 import Button from '../UI/button/Button';
+import classes from './AddPage.module.css'
 
 interface AddPageProps {
     params: string | undefined;
+    handleFileChange: ((e: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
+    handlePhotoRemove: ((index: number) => void);
+    activeId: any;
 }
 
-const AddPage: FC<AddPageProps> = ({ params }) => {
-    const [images, setImages] = useState<File[]>([])
-    const refInput = useRef<HTMLInputElement | null>(null)
+const AddPage: FC<AddPageProps> = ({ params, handleFileChange, handlePhotoRemove, activeId}) => {
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = e.target.files;
-        if (selectedFiles) {
-            const filesArray = Array.from(selectedFiles);
-            setImages(prevFiles => [...prevFiles, ...filesArray]);
-        }
-    }
+    const refInput = useRef<HTMLInputElement | null>(null)
 
     const handleButtonClick = () => {
         refInput.current?.click()
-        console.log(images)
     }
 
     return (        
@@ -31,7 +26,10 @@ const AddPage: FC<AddPageProps> = ({ params }) => {
                 onChange={handleFileChange} 
                 multiple
                 style={{display: 'none'}}/>
-            <Button onClick={handleButtonClick}>Add photo</Button>
+                <div className={classes.wrap_btn}>
+                    <Button onClick={handleButtonClick}>Add photo</Button>
+                    <Button onClick={() => handlePhotoRemove(activeId)}>Delete photo</Button>
+                </div>
         </>
     );
 };

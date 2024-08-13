@@ -2,7 +2,6 @@ import {FC, useEffect, useRef, useState} from 'react';
 import Button from '../UI/button/Button';
 import { DataProps } from '../../types/types';
 
-
 const ObjectState: FC<DataProps> = ({data, send} :DataProps) => {
     let newData = data?.split(" ").map(String);    
 
