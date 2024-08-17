@@ -1,0 +1,43 @@
+.contain_todo {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: grid; 
+    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 15% 1fr;
+    grid-template-areas: 
+                "head head head"
+                "left middle right";
+}
+.head {
+    font-size: 1.3em;
+    grid-area: head;
+}
+.left {
+    grid-area: left;
+}
+.middle {
+    grid-area: middle;
+}
+.right {
+    grid-area: right;
+}
+.button {
+    position: absolute;
+    width: 3em;
+    height: 3em;
+    bottom: 1em;
+    right: 1em;
+    border-radius: 50%;
+    background-color: rgb(135, 184, 143);
+    color: black;
+    transition: all .3s ease;
+}
+.button:hover {
+    box-shadow: 1px 3px 3px 3px black;
+}
+.button:active {
+    box-shadow: none;
+    background-color: white;
+}

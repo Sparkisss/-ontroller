@@ -24,18 +24,23 @@ const ManageTool: FC<DataProps> = ({data, coreCommands, send}) => {
     const handleClickBtn = (btn: number) => {
         if (btn === 1) {
             setPompOne(prev => {
-                const newPumpOne = prev === 0 ? 1 : 0;
-                send(1, newPumpOne, pumpTwo); 
+                const newPumpOne = prev === 0 ? 1 : 0;                
                 return newPumpOne;
             });
         } else if (btn === 2) {
             setPompTwo(prev => {
-                const newPumpTwo = prev === 0 ? 1 : 0;
-                send(1, pumpOne, newPumpTwo); 
+                const newPumpTwo = prev === 0 ? 1 : 0;                 
                 return newPumpTwo; 
             });
+        } else {
+            console.warn(`Unknown button: ${btn}`);
         }
-    }   
+    };
+
+    useEffect(() => {
+        send(1, pumpOne, pumpTwo);
+    }, [pumpOne, pumpTwo])
+      
     // Интерфейсы
     interface IControl {
         info: IStatus[];

@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 import { useState } from 'react';
-import Button from '../components/UI/button/Button';
 import { FC } from 'react';
 import Slider from '../components/slider/Slider';
 import AddPage from '../components/addPage/AddPage';
+import Todo from '../components/todo/Todo';
 
 const InfoPage: FC = () => {
     const params = useParams<{id: string}>()
@@ -34,14 +34,7 @@ const InfoPage: FC = () => {
                 <Slider images={images} setActiveId={setActiveId} activeId={activeId}/>
             </div>
             <div className='todoTask'>
-                <h3>List of tasks</h3>
-                <Button></Button>
-                <Button></Button>
-                <ul>
-                    <li>task 1</li>
-                    <li>task 2</li>
-                    <li>task 3</li>
-                </ul>
+                <Todo/>
             </div>
         </main>
     );
